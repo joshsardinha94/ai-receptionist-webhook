@@ -21,7 +21,9 @@ def send_email(subject, body):
 
     msg.attach(MIMEText(body, "html"))
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=25) as server:
+    with smtplib.SMTP("smtp.gmail.com", 587, timeout=25) as server:
+        server.ehlo()
+        server.starttls()
         server.login(sender, password)
         server.sendmail(sender, recipient, msg.as_string())
 
